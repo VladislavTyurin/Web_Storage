@@ -1,0 +1,5 @@
+{% if clients_list %}
+    {% for client in clients_list %}
+        {{client.client_id}}. {{client.client_name}}&nbsp&nbsp&nbsp&nbsp{{client.client_birthday}}<br>
+    {% endfor %}
+{% endif %}
