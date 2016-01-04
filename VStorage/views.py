@@ -1,10 +1,11 @@
 from django.http import HttpResponse
-from .models import Client
+# from .models import
 from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse('Hello, this is your future storage!')
+    context = {'manager': Manager.objects.all()}
+    return render(request, 'VStorage/index.html', context)
 
 
 def clients(request):
@@ -14,5 +15,10 @@ def clients(request):
     return render(request, 'VStorage/clients.html', context)
 
 
-def products(request):
-    return HttpResponse('This is product view!')
+def products(request, branch_id):
+    context = {
+        'products_list': Product.objects.raw("""
+            select distinct * from
+            BranchProduct where branch_id=%s""", [branch_id])
+    }
+    return render(request, 'VStorage/products.html', context)
