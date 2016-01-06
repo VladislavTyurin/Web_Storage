@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('VStorage', '0003_remove_manager_user_id'),
+        ('VStorage', '0002_manager_user_id'),
     ]
 
     operations = [

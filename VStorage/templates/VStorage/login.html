@@ -1,0 +1,117 @@
+{% extends 'VStorage/base.html' %} {% block content %}
+<br>
+<br>
+<br>
+<div class="col-md-4 col-md-offset-4">
+    <div class="form-group">
+        <form method="post" action="{% url 'store:login' %}" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Логин</label>
+                <input type="text" class="form-control" id="id_username" name="username" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+                <label for="id_password">Пароль</label>
+                <input type="password" class="form-control" id="id_password" name="password" placeholder="Пароль">
+            </div>
+            <button type="submit" class="btn btn-success">Войти</button>
+        </form>
+    </div>
+</div>
+{%if error%}
+<div class="text-center text-danger">
+    {{ error }}
+</div>
+{%endif%}
+<!--<form role="form" class="form-inline">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Введите email">
+    </div>
+    <div class="form-group">
+        <label for="pass">Пароль</label>
+        <input type="password" class="form-control" id="pass" placeholder="Пароль">
+    </div>
+    <button type="submit" class="btn btn-success">Войти</button>
+</form>-->
+<!--<form class="form-horizontal">
+    <div class="form-group">
+        <label for="mail" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="mail" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="pass" class="col-sm-2 control-label">Пароль</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="pass" placeholder="Пароль">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Запомнить меня
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Подтвердить</button>
+        </div>
+    </div>
+</form>
+
+<form class="form-horizontal">
+ <div class="form-group">
+  <label class="col-sm-2 control-label">Электропочта</label>
+  <div class="col-sm-10">
+   <p class="form-control-static">email@example.com</p>
+  </div>
+ </div>
+ <div class="form-group">
+  <label for="pass" class="col-sm-2 control-label">Пароль</label>
+  <div class="col-sm-10">
+   <input type="password" class="form-control" id="pass" placeholder="Пароль">
+  </div>
+ </div>
+</form>
+
+<div class="form-group has-success">
+ <label class="control-label" for="succ">Поле без ошибок</label>
+ <input type="text" class="form-control" id="succ">
+</div>
+<div class="form-group has-warning">
+ <label class="control-label" for="warn">Поле с предупреждением</label>
+ <input type="text" class="form-control" id="warn">
+</div>
+<div class="form-group has-error">
+ <label class="control-label" for="err">Поле с ошибкой</label>
+ <input type="text" class="form-control" id="err">
+</div>
+<div class="has-success">
+ <div class="checkbox">
+  <label>
+  <input type="checkbox" id="check-succ" value="option1">
+  Чекбокс без ошибок
+ </label>
+ </div>
+</div>
+<div class="has-warning">
+ <div class="checkbox">
+ <label>
+  <input type="checkbox" id="check-warn" value="option1">
+  чекбокс с предупреждением
+  </label>
+ </div>
+</div>
+<div class="has-error">
+ <div class="checkbox">
+  <label>
+  <input type="checkbox" id="checkboxError" value="option1">
+  Чекбокс с ошибкой
+ </label>
+ </div>
+</div>-->
+{% endblock %}

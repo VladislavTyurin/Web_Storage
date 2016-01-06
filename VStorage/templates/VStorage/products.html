@@ -1,5 +1,36 @@
+{% extends 'VStorage/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
 {% if products_list %}
-    {% for product in products_list %}
-        {{product.product_id }} {{product.product_rest}}<br>
-    {% endfor %}
+{% load filters %}
+<div class="col-md-10 col-md-offset-1">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Номер товара</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Страна изготовитель</th>
+                    <th>Остаток на складе</th>
+                    <th>Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products_list %}
+                <tr class="{{color|get_value:product.product_rest}}">
+                    <td>{{product.product_id}}</td>
+                    <td>{{product.product_name}}</td>
+                    <td>{{product.product_category}}</td>
+                    <td>{{product.product_made}}</td>
+                    <td>{{product.product_rest}}</td>
+                    <td>{{product.product_cost}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endif %}
+{% endif %}
+{% endblock %}

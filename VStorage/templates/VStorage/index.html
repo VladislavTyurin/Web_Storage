@@ -1,6 +1,50 @@
-{% if manager %}
-
-{% for man in manager %}:
-    {{man.manager_name}}{{man.branch_id}}<br>
+{% extends 'VStorage/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if branch %}
+{% for item_branch in branch %}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="btn-group-vertical col-md-12">
+            <form method="post" action="{% url 'store:products' %}" class="btn-group">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-default btn-lg btn-block">Показать товар на складе</button>
+                <input type="hidden" name="branch" value={{item_branch.branch_id}}>
+            </form>
+            <form method="post" action="{% url 'store:products' %}" class="btn-group">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-default btn-lg btn-block">Добавить новый товар</button>
+                <input type="hidden" name="branch" value={{item_branch.branch_id}}>
+            </form>
+            <form method="post" action="{% url 'store:products' %}" class="btn-group">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-default btn-lg btn-block">Оформить заказ</button>
+                <input type="hidden" name="branch" value={{item_branch.branch_id}}>
+            </form>
+        </div>
+    </div>
+</div>
+<!--{% if manager %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Фамилия и имя сотрудника</th>
+                <th>Отделение</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for man in manager %}
+            <tr>
+                <td>{{man.manager_name}}</td>
+                <td>{{man.branch_id}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}-->
 {% endfor %}
 {% endif %}
+{% endif %}
+{% endblock %}

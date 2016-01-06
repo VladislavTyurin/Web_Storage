@@ -17,8 +17,6 @@ class Product(models.Model):
     product_name = models.CharField(max_length=50)
     product_cost = models.FloatField()
     product_made = models.CharField(max_length=20)
-    product_description = models.CharField(
-        max_length=100, blank=True, null=True)
     product_category = models.CharField(max_length=50)
 
     class Meta:
