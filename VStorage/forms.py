@@ -1,5 +1,11 @@
-from django.contrib.auth.forms import AuthenticationForm
+from django import forms
+from .models import Product
 
 
-class LoginForm(AuthenticationForm):
-    pass
+class AddProduct(forms.ModelForm):
+    product_count = forms.IntegerField()
+
+    class Meta:
+        model = Product
+        fields = ['product_name', 'product_category',
+                  'product_made', 'product_cost']

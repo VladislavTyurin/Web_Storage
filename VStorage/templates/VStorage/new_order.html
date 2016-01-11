@@ -1,0 +1,57 @@
+{% extends 'VStorage/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% if order_products_list%}
+{% include 'VStorage/script.html' %}
+{% include 'VStorage/verify_button.html' %}
+{% load staticfiles %}
+{% load filters %}
+<div class="col-md-2 col-md-offset-8" id="basket_block">
+    <p>
+        <h4 id="count">В корзине {{products_count|products_plural}}</h4></p>
+</div>
+<div class="col-md-1" id="basket_block">
+    <a href="{% url 'store:basket' %}"><img src="{% static 'img/basket.png' %}" id="basket" /></a>
+</div>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <caption id="caption_table">
+                    <h2>Выбор товаров</h2></caption>
+                <thead>
+                    <tr>
+                        <th>Номер товара</th>
+                        <th>Наименование</th>
+                        <th>Категория</th>
+                        <th>Страна изготовитель</th>
+                        <th>Остаток на складе</th>
+                        <th>Цена</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in order_products_list %}
+                    <tr>
+                        <td>{{product.product_id}}</td>
+                        <td>{{product.product_name}}</td>
+                        <td>{{product.product_category}}</td>
+                        <td>{{product.product_made}}</td>
+                        <td>{{product.product_rest}}</td>
+                        <td>{{product.product_cost}}</td>
+                        <td>
+                            <button type="submit" id="b{{product.product_id}}" onclick="return check_order({{product.product_id}},
+                        '{{product.product_name}}','{{product.product_category}}',
+                        '{{product.product_made}}', {{product.product_rest}}, {{product.product_cost}})" onfocus="this.blur()" class="btn btn-success btn-block">Добавить</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% for d_b in request.session.basket %}
+            <script>disabled_buttons({{d_b.0}})</script>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %} {% endif %} {% endblock %}

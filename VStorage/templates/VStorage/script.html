@@ -1,0 +1,167 @@
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('input.number').keypress(function(e) {
+        var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+        if (verified) {
+            e.preventDefault();
+        }
+    });
+});
+
+
+function check() {
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    function clear_data() {
+        $('#id_product_name').val('');
+        $('#id_product_category').val('');
+        $('#id_product_made').val('');
+        $('#id_product_cost').val('');
+        $('#id_product_count').val('');
+    };
+
+    function show_confirm(json_data) {
+        var r = confirm("Этот товар найден на складе, изменить информацию о нем?");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'store:ajax_change_product' %}",
+                data: JSON.parse(JSON.stringify(json_data)),
+                datatype: 'json'
+            });
+            clear_data();
+        } else {}
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "{% url 'store:ajax_add_product' %}",
+        data: {
+            'product_name': $('#id_product_name').val(),
+            'product_category': $('#id_product_category').val(),
+            'product_made': $('#id_product_made').val(),
+            'product_cost': $('#id_product_cost').val(),
+            'product_count': $('#id_product_count').val(),
+        },
+        success: function(data) {
+            if (typeof data != 'string') {
+                show_confirm(data);
+            } else {
+
+                if (data != '') {
+                    alert(data);
+                    clear_data();
+                } else {
+                    alert("Не все поля формы заполнены");
+                }
+            }
+        },
+        datatype: 'json'
+
+    });
+    //return false;
+};
+
+function basket_count(id, data) {
+    var count=data.length;
+    var text;
+
+    if (count < 10 || count >= 20) {
+        if (count % 10 == 2 || count % 10 == 3 || count % 10 ==4){
+            text="В корзине "+data.length+" товара";
+        }
+        else if (count % 10 == 1) {
+            text="В корзине "+data.length+" товар";
+        }
+        else {
+            text="В корзине "+data.length+" товаров";
+        }
+    }
+    else {
+        text="В корзине "+data.length+" товаров";
+    }
+
+    $('#count').text(text);
+    $('#b'+id).prop('disabled', true);
+    $('#b'+id).text("В корзине");
+    $('#b'+id).css("background-color", "SlateGray");
+    $('#b'+id).css("border-color", "SlateGray");
+}
+
+function check_order(pr_id, pr_name, pr_categ, pr_made, pr_rest, pr_cost) {
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    $.ajax({
+        type: "POST",
+        url: "{% url 'store:ajax_add_basket' %}",
+        data: {
+            'product_id': pr_id,
+            'product_name': pr_name,
+            'product_category': pr_categ,
+            'product_made': pr_made,
+            'product_cost': pr_cost,
+            'product_count': pr_rest,
+        },
+        success: function(data) {
+           basket_count(pr_id, data);
+        }
+    });
+}
+
+</script>

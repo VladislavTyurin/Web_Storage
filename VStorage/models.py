@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 class Client(models.Model):
     client_id = models.AutoField(primary_key=True)
-    client_name = models.CharField(max_length=50)
-    client_passport = models.CharField(max_length=11)
-    client_birthday = models.DateField(blank=True, null=True)
+    client_name = models.CharField(max_length=50, null=True, default=None)
+    client_passport = models.CharField(max_length=11, null=True, default=None)
+    client_birthday = models.DateField(blank=True, null=True, default=None)
 
     class Meta:
         db_table = 'Client'
@@ -69,12 +69,14 @@ class Driver(models.Model):
 class Ordertable(models.Model):
     order_id = models.AutoField(primary_key=True)
     order_date = models.DateField()
-    order_address = models.CharField(max_length=100)
+    order_address = models.CharField(max_length=100, null=True, default=None)
     order_totalcost = models.FloatField()
     manager = models.ForeignKey(Manager, on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(
+        Client, on_delete=models.CASCADE, null=True, default=None)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
-    auto = models.ForeignKey(Auto, on_delete=models.CASCADE)
+    auto = models.ForeignKey(
+        Auto, on_delete=models.CASCADE, null=True, default=None)
 
     class Meta:
         db_table = 'OrderTable'

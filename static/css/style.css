@@ -8,22 +8,24 @@ div {
     /*border: 1px solid;*/
 }
 
+
 #header_row .col-md-12 {
-    position: relative;
     min-height: 1px;
     padding-right: 0;
-    padding-left: 0
+    padding-left: 0;
 }
 
 #header .col-md-3,
-.col-md-offset-11,
 .col-md-2,
 .col-md-offset-5 {
     height: 100%;
 }
 
 #top_text {
+    padding-top: 6px;
     height: 100%;
+    color: Teal;
+    font-family: 'arial';
     /*border: 1px solid;
     color: red;*/
 }
@@ -51,3 +53,13 @@ thead {
 tbody {
     background-color: WhiteSmoke;
 }
+
+#basket {
+    width: 60px;
+    height: 60px
+}
+
+#basket_block {
+    text-align: right;
+}
+

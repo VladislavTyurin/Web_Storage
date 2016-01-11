@@ -1,0 +1,48 @@
+{% extends 'VStorage/base.html' %} {% block content %} {% if user.is_authenticated %} {% include 'VStorage/check_input_script.html' %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="table-responsive">
+            <form method="post">
+                {% csrf_token %}
+                <table class="table table-bordered">
+                    <caption id="caption_table">
+                        <h2>Выбранные товары</h2></caption>
+                    <thead>
+                        <tr>
+                            <th>Номер товара</th>
+                            <th>Наименование</th>
+                            <th>Категория</th>
+                            <th>Страна изготовитель</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                            <!--<th></th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p_result in request.session.basket %}
+                        <tr>
+                            <td class="col-md-1">{{p_result.0}}</td>
+                            <td class="col-md-2">{{p_result.1}}</td>
+                            <td class="col-md-1">{{p_result.2}}</td>
+                            <td class="col-md-1">{{p_result.3}}</td>
+                            <td class="col-md-1">
+                                <input value="{{p_result.5}}" min="1" name="product_count_b" type="number" class="form-control number basket">
+                            </td>
+                            <td class="col-md-1">{{p_result.4}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 col-md-offset-1">
+        <button type="submit" formaction="{% url 'store:new_order' %}" onfocus="this.blur()" class="btn btn-primary btn btn-block">Назад</button>
+    </div>
+    <div class="col-md-2 col-md-offset-6">
+        <button type="submit" formaction="{% url 'store:next_basket' %}" onfocus="this.blur()" class="btn btn-primary btn btn-block">Далее</button>
+    </div>
+</div>
+</form>
+{% endif %} {% endblock %}

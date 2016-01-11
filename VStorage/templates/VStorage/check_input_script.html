@@ -1,0 +1,22 @@
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('input.number').keypress(function(e) {
+        var verified = (e.which == 8 || e.which == undefined || e.which == 0) ? null : String.fromCharCode(e.which).match(/[^0-9]/);
+        if (verified) {
+            e.preventDefault();
+        }
+    });
+});
+
+$(document).ready(function() {
+    $("input.basket").blur(function() {
+        var elements = document.getElementsByClassName('basket');
+        for (var i = 0, length = elements.length; i < length; i++) {
+            if (elements[i].value == '') {
+                elements[i].value = '1';
+            }
+        }
+    });
+});
+</script>

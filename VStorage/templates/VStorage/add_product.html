@@ -1,0 +1,46 @@
+{% extends 'VStorage/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'VStorage/script.html' %}
+<div class="col-md-10 col-md-offset-1">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <caption id="caption_table">
+                <h2>Добавление товара</h2></caption>
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Страна изготовитель</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-md-2">
+                        <input id="id_product_name" maxlength="50" name="product_name" type="text" class="form-control">
+                    </td>
+                    <td class="col-md-1">
+                        <input id="id_product_category" maxlength="50" name="product_category" type="text" class="form-control">
+                    </td>
+                    <td class="col-md-2">
+                        <input id="id_product_made" maxlength="20" name="product_made" type="text" class="form-control">
+                    </td>
+                    <td class="col-md-1">
+                        <input id="id_product_cost" name="product_cost" min="0" type="number" class="number form-control">
+                    </td>
+                    <td class="col-md-1">
+                        <input id="id_product_count" name="product_count" min="0" type="number" class="number form-control">
+                    </td>
+                    <td class="col-md-1">
+                        <button type="submit" onclick="return check()" onfocus="this.blur()" class="btn btn-success btn-block">Добавить</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

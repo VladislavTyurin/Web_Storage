@@ -1,0 +1,61 @@
+{% extends 'VStorage/base.html' %} {% block content %} {% if user.is_authenticated %}
+<div class="col-md-10 col-md-offset-1">
+    <div class="row">
+        <div class="page-header">
+            <h2>Менеджер: {{user.first_name}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-responsive">
+            <caption>
+                <h2>Список покупок</h2></caption>
+            <thead>
+                <tr>
+                    <th>Номер товара</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Страна изготовитель</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <!--<th></th>-->
+                </tr>
+            </thead>
+            <tbody>
+                {% for p_result in request.session.basket %}
+                <tr>
+                    <td class="col-md-1">{{p_result.0}}</td>
+                    <td class="col-md-2">{{p_result.1}}</td>
+                    <td class="col-md-1">{{p_result.2}}</td>
+                    <td class="col-md-1">{{p_result.3}}</td>
+                    <td class="col-md-1">{{p_result.5}}</td>
+                    <td class="col-md-1">{{p_result.4}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="col-md-4 col-md-offset-7">
+            <h3>Общая сумма:&nbsp&nbsp&nbsp{{cost}} </h3></div>
+    </div>
+    <div class="row">
+        <p>
+            <h2>Получатель:</h2></p>
+        <p>
+            <h3>Имя:&nbsp&nbsp&nbsp{{client_name}}</h3></p>
+        <p>
+            <h3>Адрес:&nbsp&nbsp&nbsp{{client_address}}</h3></p>
+        <p>
+            <h3>Дата рождения:&nbsp&nbsp&nbsp{{client_birthday}}</h3></p>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+            <form method="post" action="{% url 'store:res_end' %}">
+                {% csrf_token %}
+                <button type="submit" onclick='alert("Покупка оформлена")' onfocus="this.blur()" class="btn btn-primary btn btn-block">Оформить покупку</button>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %} {% endblock %}

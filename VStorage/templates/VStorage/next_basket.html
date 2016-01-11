@@ -1,0 +1,41 @@
+{% extends 'VStorage/base.html' %} {% block content %} {% if user.is_authenticated %}
+<div class="col-md-10 col-md-offset-1">
+    <div class="table-responsive">
+        <form method="post">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <caption id="captiontable">
+                    <h3>Введите данные клиента</h3></caption>
+                <thead>
+                    <tr>
+                        <th>Имя клиента</th>
+                        <th>Паспортные данные</th>
+                        <th>Дата рождения</th>
+                        <th>Адрес доставки</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-md-2">
+                            <input id="id_client_name" maxlength="50" name="client_name" type="text" class="form-control">
+                        </td>
+                        <td class="col-md-1">
+                            <input id="id_client_passport" maxlength="11" name="client_passport" type="text" class="form-control" placeholder="XXXX XXXXXX">
+                        </td>
+                        <td class="col-md-1">
+                            <input id="id_client_birthday" name="client_birthday" type="date" class="form-control" placeholder="YYYY-MM-DD">
+                        </td>
+                        <td class="col-md-2">
+                            <input id="id_address" name="address" maxlength="50" type="text" class="form-control">
+                        </td>
+                        <td class="col-md-1">
+                            <button type="submit" formaction="{% url 'store:result' %}" onfocus="this.blur()" class="btn btn-default btn btn-block">Добавить</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+{% endif %} {% endblock %}
